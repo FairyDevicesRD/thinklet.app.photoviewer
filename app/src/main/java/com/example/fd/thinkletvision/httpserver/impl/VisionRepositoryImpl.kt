@@ -1,7 +1,7 @@
 package com.example.fd.thinkletvision.httpserver.impl
 
 import com.example.fd.thinkletvision.httpserver.VisionRepository
-import com.example.fd.thinkletvision.logging.Logging
+import com.example.fd.thinkletvision.util.Logging
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call

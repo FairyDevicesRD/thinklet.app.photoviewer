@@ -1,4 +1,4 @@
-package com.example.fd.thinkletvision.logging
+package com.example.fd.thinkletvision.util
 
 import android.util.Log
 
