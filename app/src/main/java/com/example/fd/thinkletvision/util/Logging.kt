@@ -1,12 +1,18 @@
 package com.example.fd.thinkletvision.util
 
-import android.util.Log
+import org.koin.core.annotation.KoinInternalApi
+import org.koin.core.logger.Level
+import org.koin.java.KoinJavaComponent.getKoin
 
+/**
+ * サンプルでは，Koinのロガーを拝借しています．
+ */
 object Logging {
-    const val TAG = "ThinkletVision"
-    fun v(value: String) = Log.v(TAG, value)
-    fun d(value: String) = Log.d(TAG, value)
-    fun e(value: String) = Log.e(TAG, value)
-    fun w(value: String) = Log.w(TAG, value)
-    fun i(value: String) = Log.i(TAG, value)
+    val DEFAULT_LEVEL = Level.INFO
+
+    @OptIn(KoinInternalApi::class)
+    private val logger = getKoin().logger
+    fun i(value: String) = logger.log(Level.INFO, value)
+    fun e(value: String) = logger.log(Level.ERROR, value)
+    fun w(value: String) = logger.log(Level.WARNING, value)
 }

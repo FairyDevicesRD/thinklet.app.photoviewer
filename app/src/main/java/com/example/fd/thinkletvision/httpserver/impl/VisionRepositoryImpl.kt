@@ -20,8 +20,8 @@ internal class VisionRepositoryImpl : VisionRepository {
     private val cacheLock = ReentrantLock()
     private var cacheImage: ByteArray? = null
 
-    override fun start() {
-        serverThread = createServer()
+    override fun start(port: Int) {
+        serverThread = createServer(port)
     }
 
     override fun stop() {
@@ -34,7 +34,7 @@ internal class VisionRepositoryImpl : VisionRepository {
         }
     }
 
-    private fun createServer(port: Int = 8080): Thread {
+    private fun createServer(port: Int): Thread {
         val server = embeddedServer(Netty, port = port) {
             routing {
                 get("/") {
@@ -66,7 +66,7 @@ internal class VisionRepositoryImpl : VisionRepository {
             }.onFailure {
                 server.stop()
                 if (it is InterruptedException) {
-                    Logging.d("server shutdown")
+                    Logging.i("server shutdown")
                 } else {
                     Logging.e("unexpected stop")
                 }
@@ -127,7 +127,7 @@ internal class VisionRepositoryImpl : VisionRepository {
                 }
                 const interval = {{interval}};
                 if (interval > 0) {
-                    setInterval(updateImage, {{interval}});
+                    setInterval(updateImage, interval);
                 }
             </script>
         </div>
