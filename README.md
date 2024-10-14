@@ -1,6 +1,8 @@
 # THINKLET Vision
 インターネット接続を必要とせずに THINKLET/Androidのカメラをブラウザから視るサンプルアプリ
 
+![sample](./docs/preview.png)
+
 > [!TIP]
 > このアプリでは，カメラ映像取得のために CameraXの`画像解析ユースケース` を利用しています．
 > 追加で `VideoCapureユースケース` を使用することで，録画をしながらブラウザから視ることも可能です．
