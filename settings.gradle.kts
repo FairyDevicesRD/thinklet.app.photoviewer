@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ThinkletVision"
-include(":app")
+include(":sample")
