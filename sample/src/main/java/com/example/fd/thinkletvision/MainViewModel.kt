@@ -13,9 +13,22 @@ import com.example.fd.thinkletvision.camera.CameraRepository
 import com.example.fd.thinkletvision.util.getWifiIPAddress
 
 interface IMainViewModel {
+    /**
+     * ライフサイクルのイベントを受信開始する関数
+     * @param lifecycle
+     */
     fun setup(lifecycle: Lifecycle)
+
+    /**
+     * ライフサイクルのイベントを受信停止する関数
+     * @param lifecycle
+     */
     fun teardown(lifecycle: Lifecycle)
 
+    /**
+     * UI側の表示内容を返す
+     * @param context
+     */
     fun message(context: Context): String
 }
 
@@ -24,6 +37,7 @@ class MainViewModel(
     private val vision: Vision
 ) : ViewModel(), IMainViewModel, DefaultLifecycleObserver {
     private companion object {
+        // HTTPサーバーに使用するポート番号
         const val PORT = 8080
     }
 
@@ -36,7 +50,11 @@ class MainViewModel(
     override fun message(context: Context): String {
         return if (context.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             val ip = getWifiIPAddress(context)
-            if (ip.isEmpty()) "Wi-Fiに接続してください．" else "http://$ip:$PORT でアクセス可能です"
+            if (ip.isEmpty()) {
+                "Wi-Fiに接続してください．"
+            } else {
+                "http://$ip:$PORT でアクセス可能です"
+            }
         } else {
             "CameraのPermissionを許可してください"
         }

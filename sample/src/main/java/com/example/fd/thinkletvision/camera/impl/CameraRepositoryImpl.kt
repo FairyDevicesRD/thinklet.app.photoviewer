@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Size
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.UseCaseGroup
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -38,8 +37,6 @@ class CameraRepositoryImpl(
     private fun bindToLifecycle(
         lifecycleOwner: LifecycleOwner, cameraProvider: ProcessCameraProvider
     ) {
-        val useCaseGroup = UseCaseGroup.Builder().addUseCase(camProducer.get()).build()
-
         // 念のために，rebindingする前に unbind
         kotlin.runCatching {
             cameraProvider.unbindAll()
@@ -50,7 +47,7 @@ class CameraRepositoryImpl(
         // bind開始
         kotlin.runCatching {
             cameraProvider.bindToLifecycle(
-                lifecycleOwner, CameraSelector.DEFAULT_BACK_CAMERA, useCaseGroup
+                lifecycleOwner, CameraSelector.DEFAULT_BACK_CAMERA, camProducer.get()
             )
         }.onFailure {
             Logging.e("Use case binding failed")

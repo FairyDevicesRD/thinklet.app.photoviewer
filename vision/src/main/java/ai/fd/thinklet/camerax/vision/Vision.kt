@@ -8,16 +8,23 @@ import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
 
 /**
- * TODO: CameraXの `ImageAnalysis.Analyzer` を用いて，Analyzeに与えたImageをHTTPサーバに公開する．
+ * Vision is a class that extended from `ImageAnalysis.Analyzer` of CameraX.
+ * The JPEG data is obtained from the ImageProxy, and published on internal HTTP server.
  * The supported ImageProxy format is ImageFormat. YUV_420_888, ImageFormat. JPEG or PixelFormat. RGBA_8888.
  */
 class Vision : ImageAnalysis.Analyzer {
     private val visionRepository = VisionRepositoryImpl()
 
+    /**
+     * HTTPサーバーを [port] で起動します．
+     */
     fun start(port: Int = 8080) {
         visionRepository.start(port)
     }
 
+    /**
+     * HTTPサーバーを停止します．
+     */
     fun stop() {
         visionRepository.stop()
     }
