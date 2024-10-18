@@ -1,7 +1,7 @@
-package com.example.fd.thinkletvision.httpserver.impl
+package ai.fd.thinklet.camerax.vision.httpserver.impl
 
-import com.example.fd.thinkletvision.httpserver.VisionRepository
-import com.example.fd.thinkletvision.util.Logging
+import ai.fd.thinklet.camerax.vision.httpserver.VisionRepository
+import android.util.Log
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -26,9 +26,14 @@ internal class VisionRepositoryImpl : VisionRepository {
 
     override fun stop() {
         serverThread?.interrupt()
+        serverThread = null
     }
 
     override fun updateJpeg(bytes: ByteArray) {
+        if (serverThread == null) {
+            Log.w("Vision", "server is not running")
+            return
+        }
         cacheLock.withLock {
             cacheImage = bytes
         }
@@ -66,9 +71,9 @@ internal class VisionRepositoryImpl : VisionRepository {
             }.onFailure {
                 server.stop()
                 if (it is InterruptedException) {
-                    Logging.i("server shutdown")
+                    Log.i("Vision", "server shutdown")
                 } else {
-                    Logging.e("unexpected stop")
+                    Log.e("Vision", "unexpected stop")
                 }
             }
         }

@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ThinkletVisionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Screen(modifier = Modifier.padding(innerPadding), { viewModel.message(it) })
+                    Screen(modifier = Modifier.padding(innerPadding)) { viewModel.message(it) }
                 }
             }
         }

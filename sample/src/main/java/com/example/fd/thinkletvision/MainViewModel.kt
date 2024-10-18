@@ -1,5 +1,6 @@
 package com.example.fd.thinkletvision
 
+import ai.fd.thinklet.camerax.vision.Vision
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -9,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.example.fd.thinkletvision.camera.CameraRepository
-import com.example.fd.thinkletvision.httpserver.VisionRepository
 import com.example.fd.thinkletvision.util.getWifiIPAddress
 
 interface IMainViewModel {
@@ -20,8 +20,8 @@ interface IMainViewModel {
 }
 
 class MainViewModel(
-    private val visionRepository: VisionRepository,
-    private val cameraRepository: CameraRepository
+    private val cameraRepository: CameraRepository,
+    private val vision: Vision
 ) : ViewModel(), IMainViewModel, DefaultLifecycleObserver {
     private companion object {
         const val PORT = 8080
@@ -44,12 +44,12 @@ class MainViewModel(
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        visionRepository.start(PORT)
         cameraRepository.configure(owner)
+        vision.start(PORT)
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        visionRepository.stop()
+        vision.stop()
     }
 }
