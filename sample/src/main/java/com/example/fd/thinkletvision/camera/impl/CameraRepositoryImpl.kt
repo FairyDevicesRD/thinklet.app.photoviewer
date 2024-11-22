@@ -2,16 +2,16 @@ package com.example.fd.thinkletvision.camera.impl
 
 import ai.fd.thinklet.camerax.vision.Vision
 import android.content.Context
-import android.util.Size
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.fd.thinkletvision.camera.CameraRepository
 import com.example.fd.thinkletvision.util.Logging
+import kotlinx.coroutines.guava.await
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -21,16 +21,11 @@ class CameraRepositoryImpl(
 ) : CameraRepository {
     private val camProducer = ImageProducer(analyzer = vision)
 
-    override fun configure(lifecycleOwner: LifecycleOwner) {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-        cameraProviderFuture.addListener(
-            {
-                val cameraProvider = cameraProviderFuture.get()
-                bindToLifecycle(
-                    lifecycleOwner = lifecycleOwner,
-                    cameraProvider = cameraProvider,
-                )
-            }, ContextCompat.getMainExecutor(context)
+    override suspend fun configure(lifecycleOwner: LifecycleOwner) {
+        val cameraProvider = ProcessCameraProvider.getInstance(context).await()
+        bindToLifecycle(
+            lifecycleOwner = lifecycleOwner,
+            cameraProvider = cameraProvider
         )
     }
 
@@ -61,11 +56,11 @@ class CameraRepositoryImpl(
     ) {
         fun get(): ImageAnalysis {
             return ImageAnalysis.Builder().setResolutionSelector(
-                ResolutionSelector.Builder().setResolutionStrategy(
-                    ResolutionStrategy(
-                        Size(720, 1280), ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
-                    )
-                ).build()
+                ResolutionSelector.Builder()
+                    .setAllowedResolutionMode(ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION)
+                    .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+                    .setResolutionStrategy(ResolutionStrategy.HIGHEST_AVAILABLE_STRATEGY)
+                    .build()
             ).build().also {
                 it.setAnalyzer(executorService, analyzer)
             }

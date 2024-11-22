@@ -9,8 +9,10 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.fd.thinkletvision.camera.CameraRepository
 import com.example.fd.thinkletvision.util.getWifiIPAddress
+import kotlinx.coroutines.launch
 
 interface IMainViewModel {
     /**
@@ -36,11 +38,6 @@ class MainViewModel(
     private val cameraRepository: CameraRepository,
     private val vision: Vision
 ) : ViewModel(), IMainViewModel, DefaultLifecycleObserver {
-    private companion object {
-        // HTTPサーバーに使用するポート番号
-        const val PORT = 8080
-    }
-
     @MainThread
     override fun setup(lifecycle: Lifecycle) = lifecycle.addObserver(this)
 
@@ -62,12 +59,19 @@ class MainViewModel(
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        cameraRepository.configure(owner)
-        vision.start(PORT)
+        viewModelScope.launch {
+            cameraRepository.configure(owner)
+            vision.start(PORT)
+        }
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
         vision.stop()
+    }
+
+    private companion object {
+        // HTTPサーバーに使用するポート番号
+        const val PORT = 8080
     }
 }
