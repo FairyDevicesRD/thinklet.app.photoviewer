@@ -2,7 +2,11 @@ package com.example.fd.thinkletvision.camera.impl
 
 import ai.fd.thinklet.camerax.vision.Vision
 import android.content.Context
+import android.os.Build
+import android.util.Log
+import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraXConfig
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
@@ -19,6 +23,10 @@ class CameraRepositoryImpl(
     private val context: Context,
     vision: Vision
 ) : CameraRepository {
+    init {
+        CameraXPatch.apply()
+    }
+
     private val camProducer = ImageProducer(analyzer = vision)
 
     override suspend fun configure(lifecycleOwner: LifecycleOwner) {
@@ -63,6 +71,25 @@ class CameraRepositoryImpl(
                     .build()
             ).build().also {
                 it.setAnalyzer(executorService, analyzer)
+            }
+        }
+    }
+
+    /**
+     * CameraX向けのTHINKLETの高速化パッチ
+     */
+    private object CameraXPatch {
+        private var patched: Boolean = false
+
+        fun apply() {
+            if (!patched && Build.MODEL.contains("THINKLET")) {
+                ProcessCameraProvider.configureInstance(
+                    CameraXConfig.Builder.fromConfig(Camera2Config.defaultConfig())
+                        .setAvailableCamerasLimiter(CameraSelector.DEFAULT_BACK_CAMERA)
+                        .setMinimumLoggingLevel(Log.WARN)
+                        .build()
+                )
+                patched = true
             }
         }
     }
