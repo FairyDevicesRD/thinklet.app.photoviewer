@@ -1,4 +1,4 @@
-package com.example.fd.thinkletvision.util
+package ai.fd.thinklet.camerax.vision.util
 
 import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.logger.Level

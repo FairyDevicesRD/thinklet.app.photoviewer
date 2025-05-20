@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ThinkletVision</string>
+    <string name="app_name">THINKLET Photo Viewer</string>
+    <string name="title_activity_settings">Camera Settings</string>
+    <string name="back_to_main">戻る</string>
 </resources>

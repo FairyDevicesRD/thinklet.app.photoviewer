@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.fd.thinkletvision"
+    namespace = "ai.fd.thinklet.app.photoviewer"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.fd.thinkletvision"
+        applicationId = "ai.fd.thinklet.app.photoviewer"
         minSdk = 27
         targetSdk = 35
         versionCode = 1
@@ -46,7 +46,6 @@ android {
 
 dependencies {
     implementation(libs.koin.android)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -54,12 +53,13 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.material3)
-    implementation(project(":vision"))
     implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.kotlinx.coroutines.guava)
+
+    implementation(project(":vision"))
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

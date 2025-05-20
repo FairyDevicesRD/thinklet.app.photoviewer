@@ -1,0 +1,306 @@
+/* === Base Styles === */
+body {
+    font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+/* === Header === */
+#header {
+    background-color: #bab3ac; /* 明るい茶色っぽいグレー、サンドベージュに近い */
+    color: #ffffff;
+    padding: 20px; /* Reduced padding slightly */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space below header */
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 1.7em; /* Adjusted size */
+    font-weight: 500;
+}
+/* === Main Container & Sections === */
+#main-container {
+    display: flex;
+    flex-wrap: wrap; /* 小さな画面では折り返すように設定 */
+    justify-content: flex-start; /* 左寄せにするか、space-between なども検討 */
+    padding: 0 20px 20px 20px;
+    gap: 20px;
+}
+
+.section-card {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    /* flex-basis は個別に設定するため、ここでは削除または共通の最小値を設定 */
+    min-width: 280px; /* 最小幅は維持 */
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+    box-sizing: border-box; /* padding と border を幅計算に含める */
+}
+
+/* 個別のセクションの幅を調整 */
+#live-view-section {
+    flex-basis: 350px; /* LiveView の希望する固定幅（例） */
+    flex-grow: 0;     /* 拡大しない */
+    flex-shrink: 0;   /* 縮小しない (必要に応じて) */
+    /* 高さをギャラリーと揃えたい場合、または内容に応じて可変にする */
+}
+
+#gallery-section {
+    flex-basis: 0;    /* ベースの幅は0で、flex-growでスペースを確保 */
+    flex-grow: 1;     /* 残りの利用可能なスペースを全て使う */
+    min-width: 400px; /* ギャラリーの最小幅（例） */
+}
+
+.section-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+#live-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 15px auto;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+/* === Controls & Buttons === */
+/* .gallery-controls is a specific div for gallery buttons */
+.gallery-controls {
+    padding: 10px 0; /* Adjusted padding */
+    text-align: center;
+    margin-bottom: 15px; /* Space below gallery controls */
+    border-bottom: 1px solid #e9ecef; /* Separator line */
+}
+
+/* Common button style for all action buttons */
+.action-button {
+    padding: 10px 18px; /* Slightly adjusted padding */
+    margin: 8px;
+    font-size: 0.9em; /* Adjusted font size */
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase; /* Optional: for a more "button" feel */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1); /* Subtle shadow for buttons */
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.action-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+/* Primary Button Style */
+.action-button.primary {
+    background-color: #007bff;
+    color: white;
+}
+.action-button.primary:hover {
+    background-color: #0069d9; /* Darker shade for hover */
+}
+
+/* Secondary Button Style */
+.action-button.secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.action-button.secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Danger Button Style */
+.action-button.danger {
+    background-color: #dc3545;
+    color: white;
+}
+.action-button.danger:hover {
+    background-color: #c82333;
+}
+
+/* New Light Green Button Style */
+.action-button.light-green {
+    background-color: #a7f3d0; /* 薄い緑の例 */
+    color: #0d593a;             /* 緑に合う濃いめの文字色 */
+}
+.action-button.light-green:hover {
+    background-color: #7ef0c1; /* ホバー時にもう少し濃い緑 */
+}
+
+/* New Light Pink Button Style */
+.action-button.light-pink {
+    background-color: #fbcfe8; /* 薄いピンクの例 */
+    color: #8c1d57;             /* ピンクに合う濃いめの文字色 */
+}
+.action-button.light-pink:hover {
+    background-color: #f9a8d4; /* ホバー時にもう少し濃いピンク */
+}
+
+/* === Gallery Container & Items === */
+#gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Adjusted minmax */
+    gap: 15px;
+    padding: 10px 0; /* Adjusted padding */
+    max-width: 100%;
+}
+
+.gallery-item {
+    position: relative;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #ffffff;
+    padding: 10px; /* Slightly reduced padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.gallery-item img {
+    width: 100%; /* Ensure image takes full width of item before aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 8px; /* Reduced margin */
+    object-fit: cover;
+    aspect-ratio: 4 / 3; /* Or 16/9, or remove if not desired */
+}
+
+.gallery-item .info {
+    font-size: 0.8em; /* Adjusted size */
+    color: #6c757d;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.gallery-item input[type="checkbox"] {
+    position: absolute;
+    top: 8px; /* Adjusted position */
+    left: 8px; /* Adjusted position */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+.gallery-item input[type="checkbox"]:hover {
+    opacity: 1;
+}
+.gallery-item input[type="checkbox"]:checked {
+    opacity: 1; /* Make fully visible when checked */
+}
+
+
+/* === Modal === */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add some padding for smaller screens */
+    box-sizing: border-box;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* Max width relative to viewport */
+    max-height: 90vh; /* Max height relative to viewport height */
+    border-radius: 5px;
+    object-fit: contain; /* Ensure the whole image is visible */
+}
+
+.close-modal { /* Changed from .close to .close-modal */
+    position: absolute;
+    top: 15px; /* Adjusted for consistency */
+    right: 25px; /* Adjusted for consistency */
+    color: #f1f1f1;
+    font-size: 35px; /* Adjusted size */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1; /* Prevents extra spacing */
+    padding: 5px; /* Easier to click */
+}
+.close-modal:hover {
+    color: #bbb;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 992px) { /* Adjust breakpoint for larger tablets */
+    .section-card {
+        flex-basis: calc(100% - 40px); /* Stack sections earlier */
+    }
+}
+
+@media (max-width: 768px) {
+    #header h1 {
+        font-size: 1.5em;
+    }
+    .section-card h2 {
+        font-size: 1.25em;
+    }
+    .action-button {
+        padding: 9px 15px;
+        font-size: 0.85em;
+        /* Forcing buttons to stack in controls might be too much for live view,
+           but gallery controls can stack if needed */
+    }
+    .gallery-controls .action-button {
+        display: block; /* Stack buttons in gallery controls */
+        width: calc(100% - 16px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 10px;
+    }
+}
+
+/* 例: タブレットサイズ以下でスタックする場合 (現在の992pxを調整) */
+@media (max-width: 992px) { /* このブレークポイントはデザインに応じて調整 */
+    #main-container {
+        flex-direction: column; /* アイテムを縦に積む */
+        align-items: center; /* 中央寄せにする場合 */
+    }
+
+    #live-view-section,
+    #gallery-section {
+        flex-basis: calc(100% - 40px); /* 親のpaddingを考慮した幅 */
+        width: calc(100% - 40px); /* widthも指定すると確実 */
+        max-width: 600px; /* コンテンツが広がりすぎないように最大幅を設定（任意） */
+        flex-grow: 0; /* 縦積み時には拡大しない */
+    }
+}

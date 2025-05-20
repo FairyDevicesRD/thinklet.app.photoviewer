@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -34,5 +35,14 @@ android {
 
 dependencies {
     implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.kotlinx.coroutines.guava)
+    implementation(libs.koin.android)
     implementation(libs.ktor.server)
+    implementation(libs.ktor.server.cio)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 }

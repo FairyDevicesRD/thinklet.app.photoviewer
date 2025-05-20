@@ -1,9 +1,20 @@
-package com.example.fd.thinkletvision.util
+package ai.fd.thinklet.camerax.vision.util
 
 import android.content.Context
 import android.net.wifi.WifiManager
 import java.util.Locale
 
+/**
+ * Wi-Fi経由で割り当てられているデバイスのIPアドレスを取得します。
+ *
+ * 注意: この関数は内部で WifiManager.connectionInfo および WifiInfo.ipAddress を使用しており、
+ * これらはAPIレベル31 (Android S) で非推奨となっています。
+ * THINKLETのOSバージョン(APIレベル27)上で動作させることを前提しているためこの実装としています。
+ *
+ * @param context アプリケーションコンテキスト。
+ * @return 取得できたIPアドレスの文字列。取得に失敗した場合は空文字列。
+ */
+@Suppress("DEPRECATION")
 fun getWifiIPAddress(context: Context): String {
     try {
         val manager = context.getSystemService(WifiManager::class.java)

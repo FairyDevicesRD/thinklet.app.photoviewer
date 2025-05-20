@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カメラビュー</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div id="header">
+    <h1>カメラコントロールパネル</h1>
+</div>
+
+<div id="main-container">
+    <div id="live-view-section" class="section-card">
+        <h2>ライブビュー</h2>
+        <img id="live-image" src="" alt="Live Camera Feed">
+        <div id="controls">
+            <button onclick="sendCameraAction('/capture')" class="action-button light-green">撮影
+            </button>
+        </div>
+    </div>
+
+    <div id="gallery-section" class="section-card">
+        <h2>撮影済み画像ギャラリー</h2>
+        <div class="gallery-controls">
+            <button id="selectAllBtn" class="action-button light-green">すべて選択</button>
+            <button id="deselectAllBtn" class="action-button light-pink">選択解除</button>
+            <button id="downloadSelectedBtn" class="action-button light-green">選択画像をダウンロード
+                (ZIP)
+            </button>
+            <button id="deleteSelectedImagesBtn" class="action-button danger">選択画像を削除
+            </button>
+        </div>
+        <div id="gallery-container">
+            <!-- 画像はここにJavaScriptで読み込まれます -->
+        </div>
+    </div>
+</div>
+
+<!-- モーダルウィンドウ -->
+<div id="imageModal" class="modal">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+
+<script src="/static/script.js"></script>
+</body>
+</html>
