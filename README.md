@@ -131,5 +131,5 @@ Android Studio Narwhal | 2025.1.1 Canary 7
 *   `GET /images_list`: 撮影済み画像のリスト（ファイル名、タイムスタンプ、フォーマット済み日付を含む）をJSON形式で返します。
 *   `GET /image_file/{filename}`: 指定されたファイル名の画像データを直接返します。
 *   `POST /download_selected_zip`: リクエストボディに `{ "filenames": ["file1.jpg", "file2.jpg"] }` の形式でファイル名リストを受け取り、該当するファイルをZIP圧縮して返します。
-*   `POST /delete_selected`: リクエストボディに `{ "filenames": ["file1.jpg", "file2.jpg"] }` の形式でファイル名リストを受け取り、該当するファイルをサーバーから削除します。
+*   `POST /delete_selected_images`: リクエストボディに `{ "filenames": ["file1.jpg", "file2.jpg"] }` の形式でファイル名リストを受け取り、該当するファイルをサーバーから削除します。
 
